@@ -15,7 +15,7 @@ os.makedirs(output_folder, exist_ok=True)
 source_faces = [os.path.join(source_faces_folder, f) for f in os.listdir(source_faces_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
 
 # 初始化任务队列
-task_queue = Queue(maxsize=6)  # 每个任务队列最多包含 10 个任务
+task_queue = Queue(maxsize=15)  # 每个任务队列最多包含 30 个任务
 
 def execute_tasks(queue, task_id, selected_face_image, selected_face_name):
     """统一执行队列中的任务"""
@@ -27,30 +27,31 @@ def execute_tasks(queue, task_id, selected_face_image, selected_face_name):
     os.system(f'python facefusion.py job-submit {task_id}')
     os.system(f'python facefusion.py job-run {task_id}')
 
-# 遍历文件夹中的所有目标图片
-for target_image_filename in os.listdir(input_folder):
+# 遍历文件夹中的所有目标图片（乱序选择）
+target_images = [f for f in os.listdir(input_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+random.shuffle(target_images)  # 对目标图片列表进行乱序
+
+for target_image_filename in target_images:
     target_image_path = os.path.join(input_folder, target_image_filename)
-    if target_image_filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-        # 随机选择一个脸部图片（仅在队列为空时选择）
-        if task_queue.empty():
-            selected_face_image = random.choice(source_faces)
-            selected_face_name = os.path.splitext(os.path.basename(selected_face_image))[0]  # 获取脸部图片的文件名（不含扩展名）
-            task_id = str(uuid.uuid4())[:8]  # 为当前任务队列生成一个随机任务 ID
+    # 随机选择一个脸部图片（仅在队列为空时选择）
+    if task_queue.empty():
+        selected_face_image = random.choice(source_faces)
+        selected_face_name = os.path.splitext(os.path.basename(selected_face_image))[0]  # 获取脸部图片的文件名（不含扩展名）
+        task_id = str(uuid.uuid4())[:8]  # 为当前任务队列生成一个随机任务 ID
 
-        # 获取目标文件的扩展名
-        target_extension = os.path.splitext(target_image_path)[1]
+    # 获取目标文件的扩展名
+    target_extension = os.path.splitext(target_image_path)[1]
 
-        # 确保输出文件扩展名与目标文件一致，并在文件名中将人名放在最前面
-        # output_filename = f"{selected_face_name}_task_{task_id}_{os.path.splitext(target_image_filename)[0]}{target_extension}"
-        output_filename = f"{selected_face_name}_{os.path.splitext(target_image_filename)[0]}{target_extension}"  # 将人名放在最前面
-        output_path = os.path.join(output_folder, output_filename)
+    # 确保输出文件扩展名与目标文件一致，并在文件名中将人名放在最前面
+    output_filename = f"{selected_face_name}_{os.path.splitext(target_image_filename)[0]}{target_extension}"  # 将人名放在最前面
+    output_path = os.path.join(output_folder, output_filename)
 
-        # 将任务添加到队列
-        task_queue.put((target_image_path, output_path))
+    # 将任务添加到队列
+    task_queue.put((target_image_path, output_path))
 
-        # 如果队列已满，统一执行任务
-        if task_queue.full():
-            execute_tasks(task_queue, task_id, selected_face_image, selected_face_name)
+    # 如果队列已满，统一执行任务
+    if task_queue.full():
+        execute_tasks(task_queue, task_id, selected_face_image, selected_face_name)
 
 # 处理剩余任务
 if not task_queue.empty():

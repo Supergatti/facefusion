@@ -39,6 +39,7 @@ def repair_images(input_folder, output_folder):
         for idx, image_file in enumerate(image_files, start=max_index + 1):
             input_path = os.path.join(input_folder, image_file)
             output_path = os.path.join(output_folder, f"img_{idx}_repaired.png")
+            # output_path = os.path.join(output_folder, image_file)
             tasks.append(executor.submit(process_image, input_path, output_path))
         for task in tasks:
             task.result()  # 等待所有任务完成
