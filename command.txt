@@ -1,0 +1,96 @@
+python facefusion.py job-add-step 1145 --source-paths "H:\U15\金子美穗套图\新建文件夹 (2)\tp9_kaneko_m02" --output-path "E:\AIProject\evilOrgs" --target-path "E:\AIProject\evilPics\img_24_repaired.png"
+
+usage: facefusion.py job-add-step [-h] [--config-path CONFIG_PATH] [--jobs-path JOBS_PATH]
+                                  [-s SOURCE_PATHS [SOURCE_PATHS ...]] [-t TARGET_PATH]
+                                  [-o OUTPUT_PATH]
+                                  [--face-detector-model {many,retinaface,scrfd,yoloface}]
+                                  [--face-detector-size {640x640}]
+                                  [--face-detector-angles FACE_DETECTOR_ANGLES [FACE_DETECTOR_ANGLES ...]]
+                                  [--face-detector-score [0.0..1.0:0.05]]
+                                  [--face-landmarker-model {many,2dfan4,peppa_wutz}]
+                                  [--face-landmarker-score [0.0..1.0:0.05]]
+                                  [--face-selector-mode {many,one,reference}]
+                                  [--face-selector-order {left-right,right-left,top-bottom,bottom-top,small-large,large-small,best-worst,worst-best}]
+                                  [--face-selector-age-start [0..100:1]]
+                                  [--face-selector-age-end [0..100:1]]
+                                  [--face-selector-gender {female,male}]
+                                  [--face-selector-race {white,black,latino,asian,indian,arabic}]  
+                                  [--reference-face-position REFERENCE_FACE_POSITION]
+                                  [--reference-face-distance [0.0..1.5:0.05]]
+                                  [--reference-frame-number REFERENCE_FRAME_NUMBER]
+                                  [--face-occluder-model {xseg_1,xseg_2}]
+                                  [--face-parser-model {bisenet_resnet_18,bisenet_resnet_34}]      
+                                  [--face-mask-types FACE_MASK_TYPES [FACE_MASK_TYPES ...]]        
+                                  [--face-mask-blur [0.0..1.0:0.05]]
+                                  [--face-mask-padding FACE_MASK_PADDING [FACE_MASK_PADDING ...]]  
+                                  [--face-mask-regions FACE_MASK_REGIONS [FACE_MASK_REGIONS ...]]  
+                                  [--trim-frame-start TRIM_FRAME_START]
+                                  [--trim-frame-end TRIM_FRAME_END]
+                                  [--temp-frame-format {bmp,jpg,png}] [--keep-temp]
+                                  [--output-image-quality [0..100:1]]
+                                  [--output-image-resolution OUTPUT_IMAGE_RESOLUTION]
+                                  [--output-audio-encoder {aac,libmp3lame,libopus,libvorbis}]      
+                                  [--output-video-encoder {libx264,libx265,libvpx-vp9,h264_nvenc,hevc_nvenc,h264_amf,hevc_amf,h264_qsv,hevc_qsv,h264_videotoolbox,hevc_videotoolbox}]
+                                  [--output-video-preset {ultrafast,superfast,veryfast,faster,fast,medium,slow,slower,veryslow}]
+                                  [--output-video-quality [0..100:1]]
+                                  [--output-video-resolution OUTPUT_VIDEO_RESOLUTION]
+                                  [--output-video-fps OUTPUT_VIDEO_FPS] [--skip-audio]
+                                  [--processors PROCESSORS [PROCESSORS ...]]
+                                  [--age-modifier-model {styleganex_age}]
+                                  [--age-modifier-direction [-100..100:1]]
+                                  [--deep-swapper-model {druuzil/adrianne_palicki_384,druuzil/agnetha_falskog_224,druuzil/alan_ritchson_320,druuzil/alicia_vikander_320,druuzil/amber_midthunder_320,druuzil/andras_arato_384,druuzil/andrew_tate_320,druuzil/anne_hathaway_320,druuzil/anya_chalotra_320,druuzil/arnold_schwarzenegger_320,druuzil/benjamin_affleck_320,druuzil/benjamin_stiller_384,druuzil/bradley_pitt_224,druuzil/brie_larson_384,druuzil/bryan_cranston_320,druuzil/catherine_blanchett_352,druuzil/christian_bale_320,druuzil/christopher_hemsworth_320,druuzil/christoph_waltz_384,druuzil/cillian_murphy_320,druuzil/cobie_smulders_256,druuzil/dwayne_johnson_384,druuzil/edward_norton_320,druuzil/elisabeth_shue_320,druuzil/elizabeth_olsen_384,druuzil/elon_musk_320,druuzil/emily_blunt_320,druuzil/emma_stone_384,druuzil/emma_watson_320,druuzil/erin_moriarty_384,druuzil/eva_green_320,druuzil/ewan_mcgregor_320,druuzil/florence_pugh_320,druuzil/freya_allan_320,druuzil/gary_cole_224,druuzil/gigi_hadid_224,druuzil/harrison_ford_384,druuzil/hayden_christensen_320,druuzil/heath_ledger_320,druuzil/henry_cavill_448,druuzil/hugh_jackman_384,druuzil/idris_elba_320,druuzil/jack_nicholson_320,druuzil/james_mcavoy_320,druuzil/james_varney_320,druuzil/jason_momoa_320,druuzil/jason_statham_320,druuzil/jennifer_connelly_384,druuzil/jimmy_donaldson_320,druuzil/jordan_peterson_384,druuzil/karl_urban_224,druuzil/kate_beckinsale_384,druuzil/laurence_fishburne_384,druuzil/lili_reinhart_320,druuzil/mads_mikkelsen_384,druuzil/mary_winstead_320,druuzil/margaret_qualley_384,druuzil/melina_juergens_320,druuzil/michael_fassbender_320,druuzil/michael_fox_320,druuzil/millie_bobby_brown_320,druuzil/morgan_freeman_320,druuzil/patrick_stewart_320,druuzil/rebecca_ferguson_320,druuzil/scarlett_johansson_320,druuzil/seth_macfarlane_384,druuzil/thomas_cruise_320,druuzil/thomas_hanks_384,edel/emma_roberts_224,edel/ivanka_trump_224,edel/lize_dzjabrailova_224,edel/sidney_sweeney_224,edel/winona_ryder_224,iperov/alexandra_daddario_224,iperov/alexei_navalny_224,iperov/amber_heard_224,iperov/dilraba_dilmurat_224,iperov/elon_musk_224,iperov/emilia_clarke_224,iperov/emma_watson_224,iperov/erin_moriarty_224,iperov/jackie_chan_224,iperov/james_carrey_224,iperov/jason_statham_320,iperov/keanu_reeves_320,iperov/margot_robbie_224,iperov/natalie_dormer_224,iperov/nicolas_coppola_224,iperov/robert_downey_224,iperov/rowan_atkinson_224,iperov/ryan_reynolds_224,iperov/scarlett_johansson_224,iperov/sylvester_stallone_224,iperov/thomas_cruise_224,iperov/thomas_holland_224,iperov/vin_diesel_224,iperov/vladimir_putin_224,jen/angelica_trae_288,jen/ella_freya_224,jen/emma_myers_320,jen/evie_pickerill_224,jen/kang_hyewon_320,jen/maddie_mead_224,jen/nicole_turnbull_288,mats/alica_schmidt_320,mats/ashley_alexiss_224,mats/billie_eilish_224,mats/brie_larson_224,mats/cara_delevingne_224,mats/carolin_kebekus_224,mats/chelsea_clinton_224,mats/claire_boucher_224,mats/corinna_kopf_224,mats/florence_pugh_224,mats/hillary_clinton_224,mats/jenna_fischer_224,mats/kim_jisoo_320,mats/mica_suarez_320,mats/shailene_woodley_224,mats/shraddha_kapoor_320,mats/yu_jimin_352,rumateus/alison_brie_224,rumateus/amber_heard_224,rumateus/angelina_jolie_224,rumateus/aubrey_plaza_224,rumateus/bridget_regan_224,rumateus/cobie_smulders_224,rumateus/deborah_woll_224,rumateus/dua_lipa_224,rumateus/emma_stone_224,rumateus/hailee_steinfeld_224,rumateus/hilary_duff_224,rumateus/jessica_alba_224,rumateus/jessica_biel_224,rumateus/john_cena_224,rumateus/kim_kardashian_224,rumateus/kristen_bell_224,rumateus/lucy_liu_224,rumateus/margot_robbie_224,rumateus/megan_fox_224,rumateus/meghan_markle_224,rumateus/millie_bobby_brown_224,rumateus/natalie_portman_224,rumateus/nicki_minaj_224,rumateus/olivia_wilde_224,rumateus/shay_mitchell_224,rumateus/sophie_turner_224,rumateus/taylor_swift_224}]
+                                  [--deep-swapper-morph [0..100:1]]
+                                  [--expression-restorer-model {live_portrait}]
+                                  [--expression-restorer-factor [0..100:1]]
+                                  [--face-debugger-items FACE_DEBUGGER_ITEMS [FACE_DEBUGGER_ITEMS ...]]
+                                  [--face-editor-model {live_portrait}]
+                                  [--face-editor-eyebrow-direction [-1.0..1.0:0.05]]
+                                  [--face-editor-eye-gaze-horizontal [-1.0..1.0:0.05]]
+                                  [--face-editor-eye-gaze-vertical [-1.0..1.0:0.05]]
+                                  [--face-editor-eye-open-ratio [-1.0..1.0:0.05]]
+                                  [--face-editor-lip-open-ratio [-1.0..1.0:0.05]]
+                                  [--face-editor-mouth-grim [-1.0..1.0:0.05]]
+                                  [--face-editor-mouth-pout [-1.0..1.0:0.05]]
+                                  [--face-editor-mouth-purse [-1.0..1.0:0.05]]
+                                  [--face-editor-mouth-smile [-1.0..1.0:0.05]]
+                                  [--face-editor-mouth-position-horizontal [-1.0..1.0:0.05]]       
+                                  [--face-editor-mouth-position-vertical [-1.0..1.0:0.05]]
+                                  [--face-editor-head-pitch [-1.0..1.0:0.05]]
+                                  [--face-editor-head-yaw [-1.0..1.0:0.05]]
+                                  [--face-editor-head-roll [-1.0..1.0:0.05]]
+                                  [--face-enhancer-model {codeformer,gfpgan_1.2,gfpgan_1.3,gfpgan_1.4,gpen_bfr_256,gpen_bfr_512,gpen_bfr_1024,gpen_bfr_2048,restoreformer_plus_plus}]
+                                  [--face-enhancer-blend [0..100:1]]
+                                  [--face-enhancer-weight [0.0..1.0:0.05]]
+                                  [--face-swapper-model {blendswap_256,ghost_1_256,ghost_2_256,ghost_3_256,hififace_unofficial_256,inswapper_128,inswapper_128_fp16,simswap_256,simswap_unofficial_512,uniface_256}]
+                                  [--face-swapper-pixel-boost {128x128,256x256,384x384,512x512,768x768,1024x1024}]
+                                  [--frame-colorizer-model {ddcolor,ddcolor_artistic,deoldify,deoldify_artistic,deoldify_stable}]
+                                  [--frame-colorizer-size {192x192,256x256,384x384,512x512}]       
+                                  [--frame-colorizer-blend [0..100:1]]
+                                  [--frame-enhancer-model {clear_reality_x4,lsdir_x4,nomos8k_sc_x4,real_esrgan_x2,real_esrgan_x2_fp16,real_esrgan_x4,real_esrgan_x4_fp16,real_esrgan_x8,real_esrgan_x8_fp16,real_hatgan_x4,real_web_photo_x4,realistic_rescaler_x4,remacri_x4,siax_x4,span_kendata_x4,swin2_sr_x4,ultra_sharp_x4}]
+                                  [--frame-enhancer-blend [0..100:1]]
+                                  [--lip-syncer-model {wav2lip_96,wav2lip_gan_96}]
+                                  [--log-level {error,warn,info,debug}]
+                                  job_id
+
+commands:
+  {run,headless-run,batch-run,force-download,job-list,job-create,job-submit,job-submit-all,job-delete,job-delete-all,job-add-step,job-remix-step,job-insert-step,job-remove-step,job-run,job-run-all,job-retry,job-retry-all}
+    run                                           run the program
+    headless-run                                  run the program in headless mode
+    batch-run                                     run the program in batch mode
+    force-download                                force automate downloads and exit
+    job-list                                      list jobs by status
+    job-create                                    create a drafted job
+    job-submit                                    submit a drafted job to become a queued job      
+    job-submit-all                                submit all drafted jobs to become a queued jobs  
+    job-delete                                    delete a drafted, queued, failed or completed    
+                                                  job
+    job-delete-all                                delete all drafted, queued, failed and
+                                                  completed jobs
+    job-add-step                                  add a step to a drafted job
+    job-remix-step                                remix a previous step from a drafted job
+    job-insert-step                               insert a step to a drafted job
+    job-remove-step                               remove a step from a drafted job
+    job-run                                       run a queued job
+    job-run-all                                   run all queued jobs
+    job-retry                                     retry a failed job
+    job-retry-all                                 retry all failed jobs
