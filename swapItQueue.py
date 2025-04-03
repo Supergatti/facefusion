@@ -3,12 +3,12 @@ from queue import Queue
 
 # 定义输入文件夹、输出文件夹和参考图片路径
 output_folder = r"E:/AIProject/evilOrgs"  # 输出文件夹
-input_folder = r"E:\AIProject\evilU15"  # 待换脸的图片文件夹
-source_face_image = r"E:\AIProject\evilFace\SunQing.png"  # 提供脸部特征的参考图片
+input_folder = r"E:\AIProject\uai\ogi erena\tp_ogi04"  # 待换脸的图片文件夹
+source_face_image = r"E:\AIProject\evilFace\TangY1fan.png"  # 提供脸部特征的参考图片
 
 # 创建输出文件夹（如果不存在）
 os.makedirs(output_folder, exist_ok=True)
-
+ 
 # 初始化任务队列
 task_queue = Queue(maxsize=20)
 
@@ -18,7 +18,7 @@ def execute_tasks(queue):
     os.system(f'python facefusion.py job-create 1145')
     while not queue.empty():
         source, target, output = queue.get()
-        os.system(f'python facefusion.py job-add-step 1145 --source-paths "{source}" --output-path "{output}" --target-path "{target}" --face-selector-mode "reference" --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "512x512"')
+        os.system(f'python facefusion.py job-add-step 1145 --source-paths "{source}" --output-path "{output}" --target-path "{target}" --face-selector-mode "reference" --face-swapper-model "inswapper_128" --face-swapper-pixel-boost "512x512"')
     os.system(f'python facefusion.py job-submit 1145')
     os.system(f'python facefusion.py job-run 1145')
 

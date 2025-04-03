@@ -46,5 +46,5 @@ def repair_images(input_folder, output_folder):
 
 if __name__ == "__main__":
     input_folder = "E:\AIProject\evilOrgs"  # Replace with your input folder path
-    output_folder = "E:\AIProject\evilU15"  # Replace with your output folder path
+    output_folder = "E:\AIProject\evilFace"  # Replace with your output folder path
     repair_images(input_folder, output_folder)

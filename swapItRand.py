@@ -15,7 +15,7 @@ os.makedirs(output_folder, exist_ok=True)
 source_faces = [os.path.join(source_faces_folder, f) for f in os.listdir(source_faces_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
 
 # 初始化任务队列
-task_queue = Queue(maxsize=15)  # 每个任务队列最多包含 30 个任务
+task_queue = Queue(maxsize=2)  # 每个任务队列最多包含 30 个任务
 
 def execute_tasks(queue, task_id, selected_face_image, selected_face_name):
     """统一执行队列中的任务"""

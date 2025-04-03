@@ -94,3 +94,8 @@ commands:
     job-run-all                                   run all queued jobs
     job-retry                                     retry a failed job
     job-retry-all                                 retry all failed jobs
+
+
+
+Queue length 2 completed in 717.72 seconds
+Queue length 4 completed in 649.86 seconds
