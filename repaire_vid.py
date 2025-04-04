@@ -15,7 +15,7 @@ def repair_videos(input_folder, output_folder):
         except ValueError:
             continue
 
-    video_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.mp4', '.mov', '.avi', '.mkv'))]
+    video_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.mp4', '.mov', '.avi', '.mkv', '.wmv'))]
     for idx, video_file in enumerate(video_files, start=max_index + 1):
         input_path = os.path.join(input_folder, video_file)
         output_path = os.path.join(output_folder, f"vid_{idx}_repaired.mp4")
@@ -37,11 +37,11 @@ def repair_videos(input_folder, output_folder):
             subprocess.run(command, check=True)
             print(f"Repaired and converted: {video_file} -> {output_path}")
             # 删除输入文件
-            os.remove(input_path)
+            # os.remove(input_path)
         except subprocess.CalledProcessError as e:
             print(f"Failed to process {video_file}: {e}")
 
 if __name__ == "__main__":
-    input_folder = "E:\AIProject\evilOrgs"  # Replace with your input folder path
-    output_folder = "E:\AIProject\evilVids"  # Replace with your output folder path
+    input_folder = r"E:\AIProject\uperfect\vid0"  # Replace with your input folder path
+    output_folder = r"E:\AIProject\uperfect\vid1"  # Replace with your output folder path
     repair_videos(input_folder, output_folder)

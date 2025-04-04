@@ -8,3 +8,4 @@ from facefusion import core
 
 if __name__ == '__main__':
 	core.cli()
+# outputpath:/mnt/e/AIProject/evilRes
