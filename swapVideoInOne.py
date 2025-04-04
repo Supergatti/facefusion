@@ -3,14 +3,9 @@ import uuid
 from queue import Queue
 
 # 定义输入文件夹、输出文件夹和参考图片路径
-output_folder = r"E:\AI_Swapper_Videos"  # 视频输出文件夹
-input_folder = r"E:\AIProject\Videos\vid1"  # 待换脸的视频文件夹
+output_folder = r"E:\AI_Swapper"  # 输出文件夹
+input_folder = r"E:\AIProject\uperfect\vid4"  # 待换脸的视频文件夹
 source_faces_folder = r"E:\AIProject\GoodFaces"  # 提供脸部特征的参考图片文件夹
-
-# for ubuntu
-# output_folder = "/mnt/d/AI_Swapper_Videos"  # 视频输出文件夹
-# input_folder = "/mnt/e/AIProject/Videos/batch1"  # 待换脸的视频文件夹
-# source_faces_folder = "/mnt/e/AIProject/GoodFaces"  # 提供脸部特征的参考图片文件夹
 
 # 创建输出文件夹（如果不存在）
 os.makedirs(output_folder, exist_ok=True)
@@ -28,8 +23,8 @@ def add_task_to_global_queue(task_id, selected_face_image, target_video_path, ou
 def process_task(task_id, selected_face_image, target_video_path, output_path):
     """处理单个任务"""
     try:
-        # 视频处理命令，添加视频专用参数
-        os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "reference" --face-swapper-model "inswapper_128_fp16" --face-detection-size "640x640" --temp-frame-format "jpg" --temp-frame-quality 100 --output-video-encoder "libx264" --output-video-quality 23')
+        # os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "one" --face-selector-gender "female" --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "512x512" ')
+        os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "one" --face-selector-gender "female" --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "1024x1024" --face-enhancer-model gfpgan_1.4')
         return True
     except Exception as e:
         print(f"Error adding task step: {e}")
@@ -73,8 +68,8 @@ def execute_global_tasks():
         task = global_task_queue.get()
         task_batch.append(task)
         
-        # 视频处理资源密集，每批次只处理5个视频
-        if len(task_batch) == 5:
+        # 每 10 个任务为一批
+        if len(task_batch) == 10:
             execute_task_batch(task_batch)
             task_batch = []
     
@@ -82,7 +77,7 @@ def execute_global_tasks():
     if task_batch:
         execute_task_batch(task_batch)
 
-def process_all_faces(input_folder, output_folder):
+def process_all_videos(input_folder, output_folder):
     """对每个人脸图像处理所有视频"""
     for selected_face_image in source_faces:
         selected_face_name = os.path.splitext(os.path.basename(selected_face_image))[0]  # 获取脸部图片的文件名（不含扩展名）
@@ -98,12 +93,11 @@ def process_all_faces(input_folder, output_folder):
 
             # 遍历当前文件夹中的所有视频
             for file in files:
-                # 检查是否为视频文件
-                if file.lower().endswith(('.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv')):
+                if file.lower().endswith(('.mp4', '.avi', '.mov', '.mkv')):
                     target_video_path = os.path.join(root, file)
                     target_extension = os.path.splitext(file)[1]
 
-                    # 确保输出文件扩展名与目标文件一致
+                    # 确保输出文件扩展名与目标文件一致，并移除任务序号，仅保留人名和原文件名
                     output_filename = f"{selected_face_name}_{os.path.splitext(file)[0]}{target_extension}"
                     output_path = os.path.join(current_output_folder, output_filename)
 
@@ -111,7 +105,7 @@ def process_all_faces(input_folder, output_folder):
                     add_task_to_global_queue(uuid.uuid4(), selected_face_image, target_video_path, output_path)
 
 # 开始处理输入文件夹
-process_all_faces(input_folder, output_folder)
+process_all_videos(input_folder, output_folder)
 
 # 统一执行所有任务
 execute_global_tasks()

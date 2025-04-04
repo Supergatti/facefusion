@@ -43,5 +43,5 @@ def repair_videos(input_folder, output_folder):
 
 if __name__ == "__main__":
     input_folder = r"E:\AIProject\uperfect\vid0"  # Replace with your input folder path
-    output_folder = r"E:\AIProject\uperfect\vid1"  # Replace with your output folder path
+    output_folder = r"E:\AIProject\uperfect\vid2"  # Replace with your output folder path
     repair_videos(input_folder, output_folder)
