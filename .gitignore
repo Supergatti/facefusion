@@ -4,3 +4,5 @@ __pycache__
 .jobs
 .idea
 .vscode
+*.deb
+Miniconda3-latest-Linux-x86_64.sh
