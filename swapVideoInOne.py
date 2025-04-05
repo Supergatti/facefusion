@@ -1,5 +1,6 @@
 import os
 import uuid
+import random
 from queue import Queue
 
 # 定义输入文件夹、输出文件夹和参考图片路径
@@ -23,8 +24,8 @@ def add_task_to_global_queue(task_id, selected_face_image, target_video_path, ou
 def process_task(task_id, selected_face_image, target_video_path, output_path):
     """处理单个任务"""
     try:
-        # os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "one" --face-selector-gender "female" --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "512x512" ')
-        os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "one" --face-selector-gender "female" --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "1024x1024" --face-enhancer-model gfpgan_1.4')
+        os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "one"  --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "512x512" ')
+        #os.system(f'python facefusion.py job-add-step {task_id} --source-paths "{selected_face_image}" --output-path "{output_path}" --target-path "{target_video_path}" --face-selector-mode "one" --face-selector-gender "female" --face-swapper-model "inswapper_128_fp16" --face-swapper-pixel-boost "1024x1024" --face-enhancer-model gfpgan_1.4')
         return True
     except Exception as e:
         print(f"Error adding task step: {e}")
@@ -64,6 +65,12 @@ def execute_task_batch(task_batch):
 def execute_global_tasks():
     """分批执行全局任务队列中的所有任务"""
     task_batch = []
+    tasks = list(global_task_queue.queue)  # 获取队列中的所有任务
+    random.shuffle(tasks)  # 打乱任务顺序
+    global_task_queue.queue.clear()  # 清空原队列
+    for task in tasks:
+        global_task_queue.put(task)  # 将打乱顺序的任务重新加入队列
+
     while not global_task_queue.empty():
         task = global_task_queue.get()
         task_batch.append(task)
